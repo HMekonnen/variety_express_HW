@@ -33,8 +33,21 @@ router
      return res.status(200).json({msg: `You asked: ${req.params.question}?  - Magic 8 Ball says: ${answer}`})
 });
 
+// 4. Take one Down and Pass it Around
+router
+.route("/bottles/:totalBottles")
+.get((req,res)=>{
+let totalBottles = req.params.totalBottles || 99
+//let link = ;
+for (let i= totalBottles; i>=1; i--){
+   
+     res.status(202).json({msg: `${i} bottles of milk on the wall, ${i} bottles of milk. Take one down, pass it around: http://localhost:1000/bottles/${i-1}`})
+     
+    }
+})
 
 
+   
 
 
 
