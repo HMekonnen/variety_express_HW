@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 
 
+
 /**========================================================================================================================================= */
 
 //1. Greetings Route
@@ -44,36 +45,61 @@ router
 });
 
 
+
 /**========================================================================================================================================= */
-// 4. Take one Down and Pass it Around
+// 4a. Take one Down and Pass it Around default starting at 99 bottles + next()
+
 router
-.route("/bottles", "/bottles/:totalBottles")
-.get((req,res,next)=>{
+.route("/bottles")
+.get((req,res)=>{
+
+let totalBottles =  99
+
+for (let i= totalBottles; i>=0; i--){
+
+    if (i >=1){
+
+    return res.status(202).json({msg: `${i} bottle(s) of milk on the wall, ${i} bottle(s) of milk.Take one down, pass it around:` , link: `http://localhost:1000/bottles/${i-1}`})
+
+    }
+
+    else if (totalBottles<=0){
+      return res.status(202).json({msg: `and then there were ${i} Bottles of milk on the wall.`})
+   }
+   else{
+      return res.status(400).json({msg: `Please enter a number greater than zero :) `})
+   }
+   
+}})
+
+
+
+
+// 4b. Take one Down and Pass it Around using :totalBottles
+/**========================================================================================================================================= */
+router
+.route( "/bottles/:totalBottles")
+.get((req,res)=>{
 let totalBottles = req.params.totalBottles || 99
 
 for (let i= totalBottles; i>=0; i--){
     
     if (i >=1){
    
-     res.status(202).json({msg: `${i} bottle(s) of milk on the wall, ${i} bottle(s) of milk.Take one down, pass it around:` , link: `http://localhost:1000/bottles/${i-1}`})
+       return res.status(202).json({msg: `${i} bottle(s) of milk on the wall, ${i} bottle(s) of milk.Take one down, pass it around:` , link: `http://localhost:1000/bottles/${i-1}`})
      
     }
     
     else if (totalBottles<=0){
-       res.status(202).json({msg: `and then there were ${i} bottles of milk on the wall`})
+       return  res.status(202).json({msg: `and then there were ${i} bottles of milk on the wall`})
    }
    else{
-       res.status(400).json({msg: `Please enter a number greater than zero :) `})
+      return res.status(400).json({msg: `Please enter a number greater than zero :) `})
    }
    
 }
-next()
+
 })
-
-
-/**========================================================================================================================================= */
-   
-
 
 
 

@@ -1,8 +1,10 @@
 // Imports
 const express = require("express")
-const { url } = require("inspector")
+// Where did line 4 come from? -_^
+//const { url } = require("inspector")
 
 const home = require('./routes/api/home')
+
 
 //Config
 require("dotenv").config()
@@ -19,8 +21,9 @@ server.use(express.urlencoded({extended:false}))
 // Connect server.js w/ route files 
 server.use('/', home);
 
-server.get('/',(req,res)=>{
-    res.send(url)
+server.get('/',(req,res)=>{ // - Delete?
+    res.json({msg:`Welcome to Variety Express! 1. Greetings:http://localhost:1000/greetings/:name | 2. Magic 8 Ball: http://localhost:1000/tips/:total/:tipPercent | 3. Bottles of Milk, I : http://localhost:1000/bottles | 4. Bottles of Milk, II: http://localhost:1000/bottles/totalBottles `
+})
 })
 
 //Create PORT
