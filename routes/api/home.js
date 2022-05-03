@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 
 
+/**========================================================================================================================================= */
 
 //1. Greetings Route
 router
@@ -10,6 +11,10 @@ router
 
    return res.status(200).json({msg: `Hi there, ${req.params.name}!`})
 })
+
+
+/**========================================================================================================================================= */
+
 //2. Tip Calculator 
 
 router
@@ -18,6 +23,11 @@ router
 const tip = ((req.params.total * req.params.tipPercent)/100)
    return res.status(200).json({msg: `Hello, based on your total: $${req.params.total}.00, a ${req.params.tipPercent}% tip = $${tip}.00.`})
 }); 
+
+
+
+/**========================================================================================================================================= */
+
 
 //3. Magic 8 Ball
 router
@@ -33,14 +43,16 @@ router
      return res.status(200).json({msg: `You asked: ${req.params.question}?  - Magic 8 Ball says: ${answer}`})
 });
 
+
+/**========================================================================================================================================= */
 // 4. Take one Down and Pass it Around
 router
-.route("/bottles/:totalBottles")
-.get((req,res)=>{
+.route("/bottles", "/bottles/:totalBottles")
+.get((req,res,next)=>{
 let totalBottles = req.params.totalBottles || 99
-//let link = ;
-for (let i= totalBottles; i>=0; i--){
 
+for (let i= totalBottles; i>=0; i--){
+    
     if (i >=1){
    
      res.status(202).json({msg: `${i} bottle(s) of milk on the wall, ${i} bottle(s) of milk.Take one down, pass it around:` , link: `http://localhost:1000/bottles/${i-1}`})
@@ -48,17 +60,19 @@ for (let i= totalBottles; i>=0; i--){
     }
     
     else if (totalBottles<=0){
-       res.status(202).json({msg: `and then there were ${i} Bottles of milk on the wall.`})
+       res.status(202).json({msg: `and then there were ${i} bottles of milk on the wall`})
    }
    else{
        res.status(400).json({msg: `Please enter a number greater than zero :) `})
    }
-}})
-
-
    
+}
+next()
+})
 
 
+/**========================================================================================================================================= */
+   
 
 
 
